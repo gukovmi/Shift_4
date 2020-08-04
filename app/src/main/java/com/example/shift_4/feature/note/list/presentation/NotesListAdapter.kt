@@ -5,23 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.common.Note
+import com.example.common.CreateNoteDto
 import com.example.shift_4.R
 import kotlinx.android.synthetic.main.item_note.view.*
 
-typealias OnNoteItemClick = (Note) -> Unit
+typealias OnNoteItemClick = (CreateNoteDto) -> Unit
 typealias OnDeleteNoteItemClick = (Int) -> Unit
 
 class NotesListAdapter (
     private val context: Context,
-    private var notesList: ArrayList<Note>,
+    private var notesList: ArrayList<CreateNoteDto>,
     private val onNoteItemClick: OnNoteItemClick,
     private val onDeleteNoteItemClick: OnDeleteNoteItemClick
 
 ) : RecyclerView.Adapter<NotesListAdapter.ViewHolder>()
 {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bindNote(note: Note, position: Int, onNoteItemClick: OnNoteItemClick, onDeleteNoteItemClick: OnDeleteNoteItemClick) {
+        fun bindNote(note: CreateNoteDto, position: Int, onNoteItemClick: OnNoteItemClick, onDeleteNoteItemClick: OnDeleteNoteItemClick) {
             itemView.apply {
                 itemNoteTitle.text=note.title
                 itemNoteDescription.text=note.description

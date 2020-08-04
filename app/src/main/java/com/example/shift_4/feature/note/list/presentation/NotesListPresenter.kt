@@ -1,6 +1,6 @@
 package com.example.shift_4.feature.note.list.presentation
 
-import com.example.common.Note
+import com.example.common.CreateNoteDto
 import com.example.shift_4.feature.note.list.di.NotesListModelFactory
 import com.example.shift_4.feature.note.list.domain.NotesListModel
 
@@ -15,7 +15,7 @@ class NotesListPresenter(private var view: INotesListView
         view.initView(getNotesList())
     }
 
-    override fun onNoteItemClick(note: Note) {
+    override fun onNoteItemClick(note: CreateNoteDto) {
         view.navigateToNoteDetails(note)
     }
 
@@ -23,7 +23,7 @@ class NotesListPresenter(private var view: INotesListView
         view.updateView(getNotesList())
     }
 
-    override fun getNotesList(): ArrayList<Note>? = model.getNotesList()
+    override fun getNotesList(): ArrayList<CreateNoteDto>? = model.getNotesList()
 
     override fun deleteNote(position: Int) {
         model.deleteNote(position)

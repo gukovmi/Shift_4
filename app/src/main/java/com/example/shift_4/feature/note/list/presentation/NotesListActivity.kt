@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.common.Note
+import com.example.common.CreateNoteDto
 import com.example.shift_4.R
 import com.example.shift_4.feature.note.details.presentation.NoteDetailsActivity
 import kotlinx.android.synthetic.main.activity_notes_list.*
@@ -24,7 +24,7 @@ class NotesListActivity : AppCompatActivity(), INotesListView {
         presenter.onViewAttached()
     }
 
-    override fun initView(notesList: ArrayList<Note>?) {
+    override fun initView(notesList: ArrayList<CreateNoteDto>?) {
         if (notesList.isNullOrEmpty()) {
             Toast.makeText(this, "Notes list is empty!", Toast.LENGTH_LONG).show()
         }
@@ -40,13 +40,13 @@ class NotesListActivity : AppCompatActivity(), INotesListView {
         }
     }
 
-    override fun navigateToNoteDetails(note: Note) {
+    override fun navigateToNoteDetails(note: CreateNoteDto) {
         val intent = Intent(this, NoteDetailsActivity::class.java)
         intent.putExtra("note", note)
         startActivity(intent)
     }
 
-    override fun updateView(notesList: ArrayList<Note>?) {
+    override fun updateView(notesList: ArrayList<CreateNoteDto>?) {
         if (notesList.isNullOrEmpty()) {
             notesListRecyclerView.adapter=null
             Toast.makeText(this, "Notes list is empty!", Toast.LENGTH_LONG).show()

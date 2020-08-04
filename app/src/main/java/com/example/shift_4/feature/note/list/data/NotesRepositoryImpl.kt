@@ -1,6 +1,6 @@
 package com.example.shift_4.feature.note.list.data
 
-import com.example.common.Note
+import com.example.common.CreateNoteDto
 import com.example.shift_4.feature.note.list.domain.NotesRepository
 
 class NotesRepositoryImpl(
@@ -8,7 +8,7 @@ class NotesRepositoryImpl(
 ) :NotesRepository {
 
 
-    override fun getNotes(): ArrayList<Note> = networkNoteDataSource.getNotes()
+    override fun getNotes(): ArrayList<CreateNoteDto> = networkNoteDataSource.getNotes()
 
 
     override fun deleteNote(position: Int) {
