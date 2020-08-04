@@ -1,13 +1,13 @@
 package com.example.shift_4.feature.note.list.presentation
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.common.Note
 import com.example.shift_4.R
 import com.example.shift_4.feature.note.details.presentation.NoteDetailsActivity
-import com.example.shift_4.feature.note.domain.entity.Note
 import kotlinx.android.synthetic.main.activity_notes_list.*
 
 class NotesListActivity : AppCompatActivity(), INotesListView {

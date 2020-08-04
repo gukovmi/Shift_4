@@ -4,6 +4,7 @@ import java.io.Serializable
 
 
 class Note(
-    val tittle:String,
+    val id:Long,
+    val title:String,
     val description:String
 ): Serializable

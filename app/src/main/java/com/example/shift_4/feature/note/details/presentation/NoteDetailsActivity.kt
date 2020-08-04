@@ -2,8 +2,8 @@ package com.example.shift_4.feature.note.details.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.common.Note
 import com.example.shift_4.R
-import com.example.shift_4.feature.note.domain.entity.Note
 import kotlinx.android.synthetic.main.activity_note_details.*
 
 class NoteDetailsActivity : AppCompatActivity() {
@@ -12,7 +12,7 @@ class NoteDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_note_details)
 
         val note: Note = intent.getSerializableExtra("note") as Note
-        noteDetailsTittle.text=note.tittle
+        noteDetailsTitle.text=note.title
         noteDetailsDescription.text=note.description
     }
 }

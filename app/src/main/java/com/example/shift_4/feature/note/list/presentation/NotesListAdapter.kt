@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.common.Note
 import com.example.shift_4.R
-import com.example.shift_4.feature.note.domain.entity.Note
 import kotlinx.android.synthetic.main.item_note.view.*
 
 typealias OnNoteItemClick = (Note) -> Unit
@@ -23,7 +23,7 @@ class NotesListAdapter (
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindNote(note: Note, position: Int, onNoteItemClick: OnNoteItemClick, onDeleteNoteItemClick: OnDeleteNoteItemClick) {
             itemView.apply {
-                itemNoteTittle.text=note.tittle
+                itemNoteTitle.text=note.title
                 itemNoteDescription.text=note.description
 
                 setOnClickListener { onNoteItemClick(note) }

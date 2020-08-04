@@ -1,6 +1,6 @@
 package com.example.shift_4.feature.note.list.presentation
 
-import com.example.shift_4.feature.note.domain.entity.Note
+import com.example.common.Note
 import com.example.shift_4.feature.note.list.di.NotesListModelFactory
 import com.example.shift_4.feature.note.list.domain.NotesListModel
 
