@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.common.CreateNoteDto
 import com.example.common.Note
 import com.example.shift_4.R
 import com.example.shift_4.feature.note.details.presentation.NoteDetailsActivity
@@ -13,9 +12,9 @@ import kotlinx.android.synthetic.main.activity_notes_list.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class NotesListActivity : AppCompatActivity(), INotesListView {
+class NotesListActivity : AppCompatActivity(), NotesListView {
 
-    private lateinit var presenter: INotesListPresenter
+    private lateinit var presenter: NotesListPresenter
 
     private var notesListAdapter: NotesListAdapter? = null
 
@@ -24,7 +23,7 @@ class NotesListActivity : AppCompatActivity(), INotesListView {
         setContentView(R.layout.activity_notes_list)
 
         MainScope().launch {
-            presenter = NotesListPresenter(this@NotesListActivity)
+            presenter = NotesListPresenterImpl(this@NotesListActivity)
             presenter.onViewAttached()
         }
     }

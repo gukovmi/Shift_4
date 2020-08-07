@@ -5,11 +5,8 @@ import com.example.common.Note
 import com.example.server.db.dbQuery
 import com.example.server.db.table.Notes
 import com.example.server.db.table.toNote
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.update
 
 class NotesRepository {
     suspend fun getAll() =
@@ -34,6 +31,11 @@ class NotesRepository {
         }
     }
 
+    suspend fun getById(id: Long) =
+        dbQuery {
+            Notes.select(Notes.id eq id).map { it.toNote() }
+        }
+
     suspend fun update(note: Note) {
         dbQuery {
             Notes.update({ Notes.id eq note.id })
@@ -45,6 +47,7 @@ class NotesRepository {
             }
         }
     }
+
 
 
 //        arrayListOf<Note>(

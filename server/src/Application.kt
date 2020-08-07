@@ -64,15 +64,30 @@ fun Application.module(testing: Boolean = false) {
                     call.respond(HttpStatusCode.OK)
                 }
             }
+
+
+
+        }
+        route("/notes/details") {
+            get {
+                val id = call.request.queryParameters["id"]?.toLong()
+                if (id == null) {
+                    call.respond(HttpStatusCode.NotFound)
+                } else {
+                    repository.getById(id)
+                    call.respond(HttpStatusCode.OK)
+                }
+            }
             put {
                 val note = call.receive<Note>()
                 repository.update(note)
                 call.respond(HttpStatusCode.OK)
             }
-
-
         }
+
     }
+
+
 }
 
 
