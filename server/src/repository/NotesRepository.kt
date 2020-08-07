@@ -33,7 +33,9 @@ class NotesRepository {
 
     suspend fun getById(id: Long) =
         dbQuery {
-            Notes.select(Notes.id eq id).map { it.toNote() }
+            Notes.select(Notes.id eq id).first().toNote()
+
+            //Notes.select(Notes.id eq id).map { it.toNote() }
         }
 
     suspend fun update(note: Note) {
@@ -42,8 +44,6 @@ class NotesRepository {
             {
                 this.title=Notes.text(note.title)
                 this.description=Notes.text(note.description)
-
-
             }
         }
     }

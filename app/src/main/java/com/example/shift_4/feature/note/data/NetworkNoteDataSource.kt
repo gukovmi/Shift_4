@@ -22,7 +22,7 @@ class NetworkNoteDataSourceImpl(private val api: NotesApi) : NetworkNoteDataSour
 
 
     override suspend fun updateNote(note: Note) {
-        api.updateNote(note.id , note.title, note.description)
+        api.updateNote(note)
     }
 
 

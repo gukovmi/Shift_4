@@ -1,10 +1,7 @@
 package com.example.shift_4.feature.note.data
 
 import com.example.common.Note
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.PUT
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface NotesApi {
     @GET("/notes")
@@ -22,9 +19,11 @@ interface NotesApi {
 
     @PUT("/notes/details")
     suspend fun updateNote(
-        @Query("id") noteId: Long,
-        @Query("title") noteTitle: String,
-        @Query("description") noteDescription: String
+        @Body note: Note
+
+//        @Query("id") noteId: Long
+//        @Query("title") noteTitle: String,
+//        @Query("description") noteDescription: String
     )
 
 }
