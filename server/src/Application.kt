@@ -1,6 +1,7 @@
 package com.example.server
 
 import com.example.common.CreateNoteDto
+import com.example.common.Note
 import com.example.server.db.DatabaseFactory
 import com.example.server.repository.NotesRepository
 import io.ktor.application.Application
@@ -62,6 +63,11 @@ fun Application.module(testing: Boolean = false) {
                     repository.delete(id)
                     call.respond(HttpStatusCode.OK)
                 }
+            }
+            put {
+                val note = call.receive<Note>()
+                repository.update(note)
+                call.respond(HttpStatusCode.OK)
             }
 
 

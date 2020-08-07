@@ -6,9 +6,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.CreateNoteDto
+import com.example.common.Note
 import com.example.shift_4.R
 import com.example.shift_4.feature.note.details.presentation.NoteDetailsActivity
 import kotlinx.android.synthetic.main.activity_notes_list.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class NotesListActivity : AppCompatActivity(), INotesListView {
 
@@ -20,33 +23,40 @@ class NotesListActivity : AppCompatActivity(), INotesListView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notes_list)
 
-        presenter = NotesListPresenter(this)
-        presenter.onViewAttached()
+        MainScope().launch {
+            presenter = NotesListPresenter(this@NotesListActivity)
+            presenter.onViewAttached()
+        }
     }
 
-    override fun initView(notesList: ArrayList<CreateNoteDto>?) {
+    override fun initView(notesList: ArrayList<Note>?) {
         if (notesList.isNullOrEmpty()) {
             Toast.makeText(this, "Notes list is empty!", Toast.LENGTH_LONG).show()
-        }
-        else {
+        } else {
+
             notesListAdapter = NotesListAdapter(
-                    this,
-                    notesList = notesList,
-                    onNoteItemClick = { note -> presenter.onNoteItemClick(note) },
-                    onDeleteNoteItemClick = { position -> presenter.deleteNote(position) })
+                this,
+                notesList = notesList,
+                onNoteItemClick = { note -> presenter.onNoteItemClick(note) },
+                onDeleteNoteItemClick = { noteId ->
+                    MainScope().launch {
+                        presenter.deleteNote(noteId)
+                    }
+                })
 
             notesListRecyclerView.layoutManager = LinearLayoutManager(this)
             notesListRecyclerView.adapter = notesListAdapter
+
         }
     }
 
-    override fun navigateToNoteDetails(note: CreateNoteDto) {
+    override fun navigateToNoteDetails(note: Note) {
         val intent = Intent(this, NoteDetailsActivity::class.java)
         intent.putExtra("note", note)
         startActivity(intent)
     }
 
-    override fun updateView(notesList: ArrayList<CreateNoteDto>?) {
+    override fun updateView(notesList: ArrayList<Note>?) {
         if (notesList.isNullOrEmpty()) {
             notesListRecyclerView.adapter=null
             Toast.makeText(this, "Notes list is empty!", Toast.LENGTH_LONG).show()
@@ -56,7 +66,11 @@ class NotesListActivity : AppCompatActivity(), INotesListView {
                     this,
                     notesList = notesList,
                     onNoteItemClick = { note -> presenter.onNoteItemClick(note) },
-                    onDeleteNoteItemClick = { position -> presenter.deleteNote(position) })
+                    onDeleteNoteItemClick = { position ->
+                        MainScope().launch {
+                            presenter.deleteNote(position.toLong())
+                        }
+                    })
 
             notesListRecyclerView.layoutManager = LinearLayoutManager(this)
             notesListRecyclerView.adapter = notesListAdapter

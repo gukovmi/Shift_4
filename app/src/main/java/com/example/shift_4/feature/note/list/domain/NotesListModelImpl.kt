@@ -1,6 +1,9 @@
 package com.example.shift_4.feature.note.list.domain
 
-import com.example.common.CreateNoteDto
+
+import com.example.common.Note
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class NotesListModelImpl(
     private val getNotesListUseCase: GetNotesListUseCase,
@@ -8,10 +11,20 @@ class NotesListModelImpl(
 ): NotesListModel {
 
 
-    override fun getNotesList(): ArrayList<CreateNoteDto>? = getNotesListUseCase()
-
-    override fun deleteNote(position: Int) {
-        deleteNoteUseCase(position)
+    override suspend fun getNotesList(): ArrayList<Note>? {
+        return try {
+            getNotesListUseCase()
+        } catch (e: Exception) {
+            null
+        }
     }
 
+
+        //getNotesListUseCase()
+
+
+    override suspend fun deleteNote(noteId: Long) {
+        deleteNoteUseCase(noteId)
+    }
 }
+

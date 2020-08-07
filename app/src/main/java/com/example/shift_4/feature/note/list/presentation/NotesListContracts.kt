@@ -1,21 +1,21 @@
 package com.example.shift_4.feature.note.list.presentation
 
 import com.example.common.CreateNoteDto
+import com.example.common.Note
 
 
-
-    interface INotesListView {
-        fun initView(notesList: ArrayList<CreateNoteDto>?)
-        fun navigateToNoteDetails(note: CreateNoteDto)
-        fun updateView(notesList: ArrayList<CreateNoteDto>?)
+interface INotesListView {
+        fun initView(notesList: ArrayList<Note>?)
+        fun navigateToNoteDetails(note: Note)
+        fun updateView(notesList: ArrayList<Note>?)
     }
 
     interface INotesListPresenter {
-        fun onViewAttached()
-        fun onNoteItemClick(note: CreateNoteDto)
-        fun update()
-        fun getNotesList(): ArrayList<CreateNoteDto>?
-        fun deleteNote(position: Int)
+        suspend fun onViewAttached()
+        fun onNoteItemClick(note: Note)
+        suspend fun update()
+        suspend fun getNotesList(): ArrayList<Note>?
+        suspend fun deleteNote(noteId: Long)
     }
 
 

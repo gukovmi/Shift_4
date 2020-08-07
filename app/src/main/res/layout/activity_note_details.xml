@@ -4,22 +4,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/noteDetailsTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:textStyle="normal"
-        android:gravity="center"
-        android:fontFamily="sans-serif-black" />
-    <TextView
-        android:id="@+id/noteDetailsDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:textStyle="italic"
-        android:gravity="center" />
+    <EditText
+            android:id="@+id/noteDetailsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black" />
+
+    <EditText
+            android:id="@+id/noteDetailsDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:textStyle="italic"
+            android:gravity="center" />
+    <Button
+            android:id="@+id/updateButton"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Update"
+    />
+
 
 </LinearLayout>

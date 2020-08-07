@@ -1,25 +1,20 @@
 package com.example.shift_4.feature.note.list.data
 
 import com.example.common.CreateNoteDto
+import com.example.common.Note
 
 interface NetworkNoteDataSource {
-    fun getNotes(): ArrayList<CreateNoteDto>
+    suspend fun getNotes(): ArrayList<Note>
+    suspend fun deleteNote(noteId: Long)
 }
 
-class NetworkNoteDataSourceImpl : NetworkNoteDataSource {
-    override fun getNotes(): ArrayList<CreateNoteDto> = arrayListOf<CreateNoteDto>(
-            CreateNoteDto(
-                "title1",
-                "description1"
-            ),
-            CreateNoteDto(
-                "title2",
-                "description2"
-            ),
-            CreateNoteDto(
-                "title3",
-                "description3"
-            )
-        )
+class NetworkNoteDataSourceImpl(private val api: NotesApi) : NetworkNoteDataSource {
+    override suspend fun getNotes(): ArrayList<Note> =
+        api.getAll()
+
+    override suspend fun deleteNote(noteId: Long) {
+        api.deleteNote(noteId)
+    }
+
 
 }
