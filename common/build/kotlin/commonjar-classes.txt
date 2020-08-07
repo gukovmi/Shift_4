@@ -1,0 +1,1 @@
+C:\Users\Evil\Documents\GitHub\Shift_4\common\build\classes\kotlin\main\com\example\common\CreateNoteDto.class;C:\Users\Evil\Documents\GitHub\Shift_4\common\build\classes\kotlin\main\com\example\common\Note.class
