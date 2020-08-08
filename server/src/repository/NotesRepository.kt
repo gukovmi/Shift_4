@@ -33,7 +33,7 @@ class NotesRepository {
 
     suspend fun getById(id: Long) =
         dbQuery {
-            Notes.select(Notes.id eq id).first().toNote()
+            Notes.select(Notes.id eq id).map{it.toNote()}.first()
 
             //Notes.select(Notes.id eq id).map { it.toNote() }
         }
