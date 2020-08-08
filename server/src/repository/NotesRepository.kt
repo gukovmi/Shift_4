@@ -39,27 +39,11 @@ class NotesRepository {
     suspend fun update(note: Note) {
         dbQuery {
             Notes.update({ Notes.id eq note.id })
-            {
-                this.title=Notes.text(note.title)
-                this.description=Notes.text(note.description)
+            { updateStatement ->
+                updateStatement[title] = note.title
+                updateStatement[description] = note.description
             }
         }
     }
 
-
-
-//        arrayListOf<Note>(
-//        Note(
-//            "title1",
-//            "description1"
-//        ),
-//        Note(
-//            "title2",
-//            "description2"
-//        ),
-//        Note(
-//            "title3",
-//            "description3"
-//        )
-//    )
 }
