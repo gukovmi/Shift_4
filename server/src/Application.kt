@@ -1,7 +1,6 @@
 package com.example.server
 
 import com.example.common.CreateNoteDto
-import com.example.common.Note
 import com.example.server.db.DatabaseFactory
 import com.example.server.repository.NotesRepository
 import io.ktor.application.Application
@@ -13,8 +12,6 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
 import io.ktor.response.respond
 import io.ktor.routing.*
-import org.flywaydb.core.api.logging.Log
-import org.flywaydb.core.api.logging.LogCreator
 import java.net.URI
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -67,8 +64,6 @@ fun Application.module(testing: Boolean = false) {
                 }
             }
 
-
-
         }
         route("/notes/details") {
             get {
@@ -89,13 +84,9 @@ fun Application.module(testing: Boolean = false) {
                     repository.update(id, note)
                     call.respond(HttpStatusCode.OK)
                 }
-
             }
         }
-
     }
-
-
 }
 
 

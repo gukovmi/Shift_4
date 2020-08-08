@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <EditText
+            android:id="@+id/newNoteTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:hint="Enter note title"
+    />
+
+    <EditText
+            android:id="@+id/newNoteDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:textStyle="italic"
+            android:gravity="center"
+            android:hint="Enter note description"
+    />
+    <Button
+            android:id="@+id/addButton"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Add"
+    />
+</LinearLayout>

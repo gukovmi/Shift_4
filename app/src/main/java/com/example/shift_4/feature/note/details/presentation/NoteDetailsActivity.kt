@@ -8,8 +8,6 @@ import com.example.common.CreateNoteDto
 import com.example.common.Note
 import com.example.shift_4.R
 import com.example.shift_4.feature.note.list.presentation.NotesListActivity
-import com.example.shift_4.feature.note.list.presentation.NotesListPresenter
-import com.example.shift_4.feature.note.list.presentation.NotesListPresenterImpl
 import kotlinx.android.synthetic.main.activity_note_details.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -17,7 +15,6 @@ import kotlinx.coroutines.launch
 class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
 
     private lateinit var presenter: NoteDetailsPresenter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,12 +39,11 @@ class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
                     val intent = Intent(this@NoteDetailsActivity, NotesListActivity::class.java)
                     startActivity(intent)
                 }
+                else {
+                    Toast.makeText(this@NoteDetailsActivity, "Fields not changed", Toast.LENGTH_LONG).show()
+                }
             }
         }
-
-//        val note: Note = intent.getSerializableExtra("note") as Note
-//        noteDetailsTitle.hint=note.title
-//        noteDetailsDescription.hint=note.description
     }
 
     override fun initView(note: Note) {

@@ -4,9 +4,6 @@ import com.example.common.CreateNoteDto
 import com.example.common.Note
 import com.example.shift_4.feature.note.details.di.NoteDetailsModelFactory
 import com.example.shift_4.feature.note.details.domain.NoteDetailsModel
-import com.example.shift_4.feature.note.list.di.NotesListModelFactory
-import com.example.shift_4.feature.note.list.domain.NotesListModel
-import com.example.shift_4.feature.note.list.presentation.NotesListView
 
 class NoteDetailsPresenterImpl(private var view: NoteDetailsView
 ): NoteDetailsPresenter {
@@ -23,6 +20,5 @@ class NoteDetailsPresenterImpl(private var view: NoteDetailsView
 
     override suspend fun getNote(noteId: Long): Note =
         model.getNote(noteId)
-
 
 }

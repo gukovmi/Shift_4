@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.common.CreateNoteDto
 import com.example.common.Note
 import com.example.shift_4.R
 import kotlinx.android.synthetic.main.item_note.view.*

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.Note
 import com.example.shift_4.R
+import com.example.shift_4.feature.note.add.presentation.AddNoteActivity
 import com.example.shift_4.feature.note.details.presentation.NoteDetailsActivity
 import kotlinx.android.synthetic.main.activity_notes_list.*
 import kotlinx.coroutines.MainScope
@@ -25,6 +26,11 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
         MainScope().launch {
             presenter = NotesListPresenterImpl(this@NotesListActivity)
             presenter.onViewAttached()
+        }
+
+        addNoteButton.setOnClickListener {
+            val intent = Intent(this, AddNoteActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -54,7 +60,6 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
 
             notesListRecyclerView.layoutManager = LinearLayoutManager(this)
             notesListRecyclerView.adapter = notesListAdapter
-
         }
     }
 

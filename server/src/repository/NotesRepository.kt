@@ -1,7 +1,6 @@
 package com.example.server.repository
 
 import com.example.common.CreateNoteDto
-import com.example.common.Note
 import com.example.server.db.dbQuery
 import com.example.server.db.table.Notes
 import com.example.server.db.table.toNote

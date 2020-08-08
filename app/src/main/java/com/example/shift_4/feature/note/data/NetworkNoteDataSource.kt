@@ -8,6 +8,7 @@ interface NetworkNoteDataSource {
     suspend fun deleteNote(noteId: Long)
     suspend fun getNote(noteId: Long): Note
     suspend fun updateNote(noteId: Long, createNoteDto: CreateNoteDto)
+    suspend fun addNote(createNoteDto: CreateNoteDto)
 }
 
 class NetworkNoteDataSourceImpl(private val api: NotesApi) : NetworkNoteDataSource {
@@ -24,6 +25,10 @@ class NetworkNoteDataSourceImpl(private val api: NotesApi) : NetworkNoteDataSour
 
     override suspend fun updateNote(noteId: Long, createNoteDto: CreateNoteDto) {
         api.updateNote(noteId, createNoteDto)
+    }
+
+    override suspend fun addNote(createNoteDto: CreateNoteDto) {
+        api.addNote(createNoteDto)
     }
 
 

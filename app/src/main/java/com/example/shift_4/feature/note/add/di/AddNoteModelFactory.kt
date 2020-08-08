@@ -1,19 +1,18 @@
-package com.example.shift_4.feature.note.details.di
+package com.example.shift_4.feature.note.add.di
 
+import com.example.shift_4.feature.note.add.domain.AddNoteModelImpl
+import com.example.shift_4.feature.note.add.domain.AddNoteUseCase
 import com.example.shift_4.feature.note.data.NetworkNoteDataSourceImpl
 import com.example.shift_4.feature.note.data.NotesApi
 import com.example.shift_4.feature.note.data.NotesRepositoryImpl
-import com.example.shift_4.feature.note.details.domain.GetNoteUseCase
-import com.example.shift_4.feature.note.details.domain.NoteDetailsModelImpl
-import com.example.shift_4.feature.note.details.domain.UpdateNoteUseCase
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class NoteDetailsModelFactory {
+class AddNoteModelFactory {
 
-    fun create() : NoteDetailsModelImpl {
+    fun create() : AddNoteModelImpl {
 
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -30,9 +29,8 @@ class NoteDetailsModelFactory {
 
         val networkNoteDataSource = NetworkNoteDataSourceImpl(api)
         val notesRepository= NotesRepositoryImpl(networkNoteDataSource)
-        val getNoteUseCase = GetNoteUseCase(notesRepository)
-        val updateNoteUseCase= UpdateNoteUseCase(notesRepository)
+        val addNoteUseCase = AddNoteUseCase(notesRepository)
 
-        return NoteDetailsModelImpl(getNoteUseCase, updateNoteUseCase)
+        return AddNoteModelImpl(addNoteUseCase)
     }
 }

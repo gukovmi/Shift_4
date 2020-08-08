@@ -23,4 +23,8 @@ class NotesRepositoryImpl(
         networkNoteDataSource.updateNote(noteId, createNoteDto)
     }
 
+    override suspend fun addNote(createNoteDto: CreateNoteDto) {
+        networkNoteDataSource.addNote(createNoteDto)
+    }
+
 }

@@ -22,10 +22,11 @@ interface NotesApi {
     suspend fun updateNote(
         @Query("id") noteId: Long,
         @Body createNoteDto: CreateNoteDto
+    )
 
-//        @Query("id") noteId: Long
-//        @Query("title") noteTitle: String,
-//        @Query("description") noteDescription: String
+    @POST("/notes")
+    suspend fun addNote(
+        @Body createNoteDto: CreateNoteDto
     )
 
 }
