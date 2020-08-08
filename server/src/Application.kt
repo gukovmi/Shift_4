@@ -13,6 +13,8 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
 import io.ktor.response.respond
 import io.ktor.routing.*
+import org.flywaydb.core.api.logging.Log
+import org.flywaydb.core.api.logging.LogCreator
 import java.net.URI
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -70,12 +72,13 @@ fun Application.module(testing: Boolean = false) {
         }
         route("/notes/details") {
             get {
+                print(call.request.queryParameters["id"]?.toString())
                 val id = call.request.queryParameters["id"]?.toLong()
                 if (id == null) {
                     call.respond(HttpStatusCode.NotFound)
                 } else {
-                    repository.getById(id)
-                    call.respond(HttpStatusCode.OK)
+                    call.respond(repository.getById(id))
+                    //call.respond(HttpStatusCode.OK)
                 }
             }
             put {
