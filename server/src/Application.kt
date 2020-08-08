@@ -79,15 +79,17 @@ fun Application.module(testing: Boolean = false) {
                     call.respond(repository.getById(id))
                 }
             }
-            put {
-                try {
-                    val note = call.receive<Note>()
-                    repository.update(note)
-                    call.respond(HttpStatusCode.OK)
-                }
-                catch (e:Exception) {
+            patch {
+                val id = call.request.queryParameters["id"]?.toLong()
+                val note = call.receive<CreateNoteDto>()
+                if (id == null) {
                     call.respond(HttpStatusCode.BadRequest)
                 }
+                else {
+                    repository.update(id, note)
+                    call.respond(HttpStatusCode.OK)
+                }
+
             }
         }
 

@@ -36,12 +36,12 @@ class NotesRepository {
             Notes.select(Notes.id eq id).map{it.toNote()}.first()
         }
 
-    suspend fun update(note: Note) {
+    suspend fun update(id: Long, createNoteDto: CreateNoteDto) {
         dbQuery {
-            Notes.update({ Notes.id eq note.id })
+            Notes.update({ Notes.id eq id })
             { updateStatement ->
-                updateStatement[title] = note.title
-                updateStatement[description] = note.description
+                updateStatement[title] = createNoteDto.title
+                updateStatement[description] = createNoteDto.description
             }
         }
     }
