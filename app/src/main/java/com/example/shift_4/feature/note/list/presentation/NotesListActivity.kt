@@ -28,6 +28,15 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        MainScope().launch {
+            presenter = NotesListPresenterImpl(this@NotesListActivity)
+            presenter.onViewAttached()
+        }
+    }
+
     override fun initView(notesList: ArrayList<Note>?) {
         if (notesList.isNullOrEmpty()) {
             Toast.makeText(this, "Notes list is empty!", Toast.LENGTH_LONG).show()

@@ -8,5 +8,5 @@ interface NotesRepository {
     suspend fun getNotes(): ArrayList<Note>
     suspend fun deleteNote(noteId: Long)
     suspend fun getNote(noteId: Long): Note
-    suspend fun updateNote(note:Note)
+    suspend fun updateNote(noteId: Long, createNoteDto: CreateNoteDto)
 }

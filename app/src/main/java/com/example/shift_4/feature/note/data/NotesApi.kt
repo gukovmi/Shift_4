@@ -1,5 +1,6 @@
 package com.example.shift_4.feature.note.data
 
+import com.example.common.CreateNoteDto
 import com.example.common.Note
 import retrofit2.http.*
 
@@ -17,9 +18,10 @@ interface NotesApi {
         @Query("id") noteId: Long
     ): Note
 
-    @PUT("/notes/details")
+    @PATCH("/notes/details")
     suspend fun updateNote(
-        @Body note: Note
+        @Query("id") noteId: Long,
+        @Body createNoteDto: CreateNoteDto
 
 //        @Query("id") noteId: Long
 //        @Query("title") noteTitle: String,

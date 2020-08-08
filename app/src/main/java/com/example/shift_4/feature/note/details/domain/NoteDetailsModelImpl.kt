@@ -1,5 +1,6 @@
 package com.example.shift_4.feature.note.details.domain
 
+import com.example.common.CreateNoteDto
 import com.example.common.Note
 
 
@@ -11,8 +12,8 @@ class NoteDetailsModelImpl (
         getNoteUseCase(noteId)
 
 
-    override suspend fun updateNote(note: Note) {
-        updateNoteUseCase(note)
+    override suspend fun updateNote(noteId: Long, createNoteDto: CreateNoteDto) {
+        updateNoteUseCase(noteId, createNoteDto)
     }
 
 }

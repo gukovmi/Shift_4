@@ -1,5 +1,6 @@
 package com.example.shift_4.feature.note.data
 
+import com.example.common.CreateNoteDto
 import com.example.common.Note
 
 class NotesRepositoryImpl(
@@ -18,8 +19,8 @@ class NotesRepositoryImpl(
         networkNoteDataSource.getNote(noteId)
 
 
-    override suspend fun updateNote(note: Note) {
-        networkNoteDataSource.updateNote(note)
+    override suspend fun updateNote(noteId: Long, createNoteDto: CreateNoteDto) {
+        networkNoteDataSource.updateNote(noteId, createNoteDto)
     }
 
 }
