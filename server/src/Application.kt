@@ -45,9 +45,15 @@ fun Application.module(testing: Boolean = false) {
     routing {
         route("/notes") {
             get {
-
-                val notesList = repository.getAll()
-                call.respond(notesList)
+                val start = call.request.queryParameters["start"]?.toLong()
+                val size = call.request.queryParameters["size"]?.toInt()
+                if (start == null || size == null) {
+                    val notesList = repository.getAll()
+                    call.respond(notesList)
+                } else {
+                    val notesList = repository.getPage(start, size)
+                    call.respond(notesList)
+                }
             }
             post {
                 val note = call.receive<CreateNoteDto>()
@@ -79,8 +85,7 @@ fun Application.module(testing: Boolean = false) {
                 val note = call.receive<CreateNoteDto>()
                 if (id == null) {
                     call.respond(HttpStatusCode.BadRequest)
-                }
-                else {
+                } else {
                     repository.update(id, note)
                     call.respond(HttpStatusCode.OK)
                 }
@@ -88,5 +93,6 @@ fun Application.module(testing: Boolean = false) {
         }
     }
 }
+
 
 

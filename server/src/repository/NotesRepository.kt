@@ -13,6 +13,12 @@ class NotesRepository {
             Notes.selectAll().map { it.toNote() }
         }
 
+    suspend fun getPage(start: Long, size: Int) =
+        dbQuery {
+            Notes.select { Notes.id.greater(start) }
+                .limit(size).map{it.toNote()}
+        }
+
     suspend fun add(createNoteDto: CreateNoteDto) {
         dbQuery {
             Notes.insert{ insertStatement ->
