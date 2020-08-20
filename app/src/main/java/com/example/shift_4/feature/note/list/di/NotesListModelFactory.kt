@@ -5,6 +5,7 @@ import com.example.shift_4.feature.note.data.NotesApi
 import com.example.shift_4.feature.note.data.NotesRepositoryImpl
 import com.example.shift_4.feature.note.list.domain.DeleteNoteUseCase
 import com.example.shift_4.feature.note.list.domain.GetNotesListUseCase
+import com.example.shift_4.feature.note.list.domain.GetPageUseCase
 import com.example.shift_4.feature.note.list.domain.NotesListModelImpl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,8 +32,9 @@ class NotesListModelFactory {
         val networkNoteDataSource = NetworkNoteDataSourceImpl(api)
         val notesRepository=NotesRepositoryImpl(networkNoteDataSource)
         val getNotesListUseCase = GetNotesListUseCase(notesRepository)
+        val getPageUseCase=GetPageUseCase(notesRepository)
         val deleteNoteUseCase=DeleteNoteUseCase(notesRepository)
 
-        return NotesListModelImpl(getNotesListUseCase, deleteNoteUseCase)
+        return NotesListModelImpl(getNotesListUseCase, deleteNoteUseCase, getPageUseCase)
     }
 }

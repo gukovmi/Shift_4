@@ -12,7 +12,7 @@ class NotesListPresenterImpl(private var view: NotesListView
 
 
     override suspend fun onViewAttached() {
-            view.initView(getNotesList())
+        view.showNotes(getPage(0, 10))
     }
 
     override fun onNoteItemClick(note: Note) {
@@ -20,8 +20,10 @@ class NotesListPresenterImpl(private var view: NotesListView
     }
 
     override suspend fun update() {
-        view.updateView(getNotesList())
+        view.showNotes(getPage(0, 10))
     }
+
+    override suspend fun getPage(start: Long, size: Int): ArrayList<Note>? = model.getPage(start, size)
 
     override suspend fun getNotesList(): ArrayList<Note>? = model.getNotesList()
 

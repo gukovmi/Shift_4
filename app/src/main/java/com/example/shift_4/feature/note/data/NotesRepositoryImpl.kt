@@ -10,6 +10,10 @@ class NotesRepositoryImpl(
 
     override suspend fun getNotes(): ArrayList<Note> = networkNoteDataSource.getNotes()
 
+    override suspend fun getPage(start: Long, size: Int): ArrayList<Note> =
+        networkNoteDataSource.getPage(start, size)
+
+
 
     override suspend fun deleteNote(noteId: Long) {
         networkNoteDataSource.deleteNote(noteId)

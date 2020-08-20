@@ -4,5 +4,6 @@ import com.example.common.Note
 
 interface NotesListModel {
     suspend fun getNotesList(): ArrayList<Note>?
+    suspend fun getPage(start: Long, size: Int): ArrayList<Note>?
     suspend fun deleteNote(noteId: Long)
 }

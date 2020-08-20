@@ -4,9 +4,8 @@ import com.example.common.Note
 
 
 interface NotesListView {
-        fun initView(notesList: ArrayList<Note>?)
+        fun showNotes(notesList: ArrayList<Note>?)
         fun navigateToNoteDetails(note: Note)
-        fun updateView(notesList: ArrayList<Note>?)
     }
 
 interface NotesListPresenter {
@@ -14,6 +13,7 @@ interface NotesListPresenter {
     fun onNoteItemClick(note: Note)
     suspend fun update()
     suspend fun getNotesList(): ArrayList<Note>?
+    suspend fun getPage(start: Long, size: Int): ArrayList<Note>?
     suspend fun deleteNote(noteId: Long)
 }
 

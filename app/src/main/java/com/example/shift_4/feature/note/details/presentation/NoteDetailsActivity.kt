@@ -9,12 +9,17 @@ import com.example.common.Note
 import com.example.shift_4.R
 import com.example.shift_4.feature.note.list.presentation.NotesListActivity
 import kotlinx.android.synthetic.main.activity_note_details.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
 
     private lateinit var presenter: NoteDetailsPresenter
+
+    private val coroutineScope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,14 +27,13 @@ class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
 
         val note: Note = intent.getSerializableExtra("note") as Note
 
-        MainScope().launch {
+        coroutineScope.launch {
             presenter = NoteDetailsPresenterImpl(this@NoteDetailsActivity)
-
             presenter.onViewAttached(note.id)
         }
 
         updateButton.setOnClickListener {
-            MainScope().launch {
+            coroutineScope.launch {
                 val noteTitle = noteDetailsTitle.text.toString()
                 val noteDescription = noteDetailsDescription.text.toString()
                 if (noteTitle != note.title || noteDescription != note.description) {
@@ -50,4 +54,10 @@ class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
         noteDetailsTitle.setText(note.title)
         noteDetailsDescription.setText(note.description)
     }
+
+    override fun onDestroy() {
+        coroutineScope.cancel()
+        super.onDestroy()
+    }
+
 }

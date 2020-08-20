@@ -8,6 +8,12 @@ interface NotesApi {
     @GET("/notes")
     suspend fun getAll(): ArrayList<Note>
 
+    @GET("/notes")
+    suspend fun getPage(
+        @Query("start") start: Long,
+        @Query("size") size: Int
+    ): ArrayList<Note>
+
     @DELETE("/notes")
     suspend fun deleteNote(
         @Query("id") noteId: Long

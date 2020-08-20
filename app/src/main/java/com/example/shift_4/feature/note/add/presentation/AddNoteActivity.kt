@@ -32,7 +32,7 @@ class AddNoteActivity : AppCompatActivity(), AddNoteView {
                 if (noteTitle != "" && noteDescription != "") {
                     val newNote = CreateNoteDto(noteTitle, noteDescription)
                     presenter.addNote(newNote)
-                    Toast.makeText(this@AddNoteActivity, "Note created", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@AddNoteActivity, "Note created", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@AddNoteActivity, NotesListActivity::class.java)
                     startActivity(intent)
                 }
@@ -42,6 +42,6 @@ class AddNoteActivity : AppCompatActivity(), AddNoteView {
     }
 
     override fun initView() {
-        Toast.makeText(this, "Enter the note's title and description", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Enter the note's title and description", Toast.LENGTH_SHORT).show()
     }
 }
