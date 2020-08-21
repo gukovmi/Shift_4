@@ -66,9 +66,10 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
             val mLayoutManager = LinearLayoutManager(this)
             notesListRecyclerView.layoutManager = mLayoutManager
 
+
             val divider = DividerItemDecoration(
-                notesListRecyclerView.context, mLayoutManager.orientation
-            )
+                notesListRecyclerView.context, mLayoutManager.orientation)
+
             ContextCompat.getDrawable(baseContext, R.drawable.divider_black)?.let { divider.setDrawable(it) }
             notesListRecyclerView.addItemDecoration(divider)
 
@@ -100,7 +101,6 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
             itemTouchHelper.attachToRecyclerView(notesListRecyclerView)
 
             notesListRecyclerView.adapter = notesListAdapter
-
             notesListRecyclerView?.addOnScrollListener(object : PaginationScrollListener(mLayoutManager) {
 
                 override fun isLastPage(): Boolean {
@@ -124,6 +124,7 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
                 }
             })
         }
+
     }
 
     override fun navigateToNoteDetails(note: Note) {

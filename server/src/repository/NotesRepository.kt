@@ -10,11 +10,12 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 class NotesRepository {
     suspend fun getAll() =
         dbQuery {
-            Notes.selectAll().map { it.toNote() }
+            Notes.selectAll().sortedBy { Notes.id }.map { it.toNote() }
         }
 
     suspend fun getPage(start: Long, size: Int) =
         dbQuery {
+            Notes.selectAll().sortedBy { Notes.id }
             Notes.select { Notes.id.greater(start) }
                 .limit(size).map{it.toNote()}
         }
@@ -25,6 +26,7 @@ class NotesRepository {
                 insertStatement[title] = createNoteDto.title
                 insertStatement[description] = createNoteDto.description
             }
+            Notes.selectAll().sortedBy { Notes.id }
         }
     }
 
