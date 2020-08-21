@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 class NotesRepository {
     suspend fun getAll() =
         dbQuery {
-            Notes.selectAll().sortedBy { Notes.id }.map { it.toNote() }
+            Notes.selectAll().orderBy(Notes.id to SortOrder.ASC).map { it.toNote() }
         }
 
     suspend fun getPage(start: Long, size: Int) =
@@ -26,7 +26,7 @@ class NotesRepository {
                 insertStatement[title] = createNoteDto.title
                 insertStatement[description] = createNoteDto.description
             }
-            Notes.selectAll().sortedBy { Notes.id }
+            Notes.selectAll().orderBy(Notes.id to SortOrder.ASC)
         }
     }
 
