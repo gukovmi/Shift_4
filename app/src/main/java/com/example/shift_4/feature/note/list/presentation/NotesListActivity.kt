@@ -115,9 +115,10 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
                     notesListAdapter!!.isLoading = true
 
                     coroutineScope.launch {
-                        val currentNotesList = notesListAdapter!!.getNotesList()
-                        val lastElId = currentNotesList.last().id
-                        val newPage = presenter.getPage(lastElId, 10)
+                        //val currentNotesList = notesListAdapter!!.getNotesList()
+                        //val lastElId = currentNotesList.last().id
+                        val lastElIndex=notesListAdapter!!.getNotesList().lastIndex
+                        val newPage = presenter.getPage((lastElIndex+1).toLong(), 10)
                         notesListAdapter!!.addData(newPage)
                         notesListAdapter!!.isLoading = false
                     }
