@@ -16,7 +16,12 @@ class NotesRepository {
 
     suspend fun getPage(start: Long, size: Int) =
         dbQuery {
-            Notes.selectAll().orderBy(Notes.id to SortOrder.ASC).map { it.toNote() }.subList(start.toInt(), size)
+            if (Notes.selectAll().count()>=start.toInt()+size) {
+                Notes.selectAll().orderBy(Notes.id to SortOrder.ASC).map { it.toNote() }.subList(start.toInt(), start.toInt() + size)
+            }
+            else{
+                Notes.selectAll().orderBy(Notes.id to SortOrder.ASC).map { it.toNote() }.subList(start.toInt(), Notes.selectAll().count())
+            }
 
             //Notes.select { Notes.id.greater(start) }.limit(size).map{it.toNote()}
 
