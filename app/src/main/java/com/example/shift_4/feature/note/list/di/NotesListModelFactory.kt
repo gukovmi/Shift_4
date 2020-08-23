@@ -1,5 +1,6 @@
 package com.example.shift_4.feature.note.list.di
 
+import com.example.shift_4.feature.note.data.Constants.BASE_URL
 import com.example.shift_4.feature.note.data.NetworkNoteDataSourceImpl
 import com.example.shift_4.feature.note.data.NotesApi
 import com.example.shift_4.feature.note.data.NotesRepositoryImpl
@@ -22,7 +23,7 @@ class NotesListModelFactory {
             .addInterceptor(interceptor)
             .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://shift-backend.herokuapp.com/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

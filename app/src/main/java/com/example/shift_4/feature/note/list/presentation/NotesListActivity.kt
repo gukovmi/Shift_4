@@ -2,7 +2,6 @@ package com.example.shift_4.feature.note.list.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -27,7 +26,6 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
 
     private val coroutineScope = MainScope()
 
-    private var currentNotesList:ArrayList<Note>?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notes_list)
@@ -55,7 +53,6 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
         if (notesList.isNullOrEmpty()) {
             Toast.makeText(this, "Notes list is empty!", Toast.LENGTH_LONG).show()
         } else {
-            currentNotesList = notesList
             notesListAdapter = NotesListAdapter(
                 this,
                 notesList = notesList,
@@ -65,7 +62,6 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
 
             val mLayoutManager = LinearLayoutManager(this)
             notesListRecyclerView.layoutManager = mLayoutManager
-
 
             val divider = DividerItemDecoration(
                 notesListRecyclerView.context, mLayoutManager.orientation)
@@ -115,8 +111,6 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
                     notesListAdapter!!.isLoading = true
 
                     coroutineScope.launch {
-                        //val currentNotesList = notesListAdapter!!.getNotesList()
-                        //val lastElId = currentNotesList.last().id
                         val lastElIndex=notesListAdapter!!.getNotesList().lastIndex
                         val newPage = presenter.getPage((lastElIndex+1).toLong(), 10)
                         notesListAdapter!!.addData(newPage)
@@ -125,7 +119,6 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
                 }
             })
         }
-
     }
 
     override fun navigateToNoteDetails(note: Note) {

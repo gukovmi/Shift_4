@@ -3,7 +3,6 @@ package com.example.shift_4.feature.note.list.presentation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-
 abstract class PaginationScrollListener(
     var layoutManager: LinearLayoutManager
 ) : RecyclerView.OnScrollListener()
