@@ -5,5 +5,5 @@ import com.example.common.Note
 
 interface NoteDetailsModel {
     suspend fun getNote(noteId: Long): Note
-    suspend fun updateNote(noteId: Long, createNoteDto: CreateNoteDto)
+    suspend fun updateNote(note: Note)
 }

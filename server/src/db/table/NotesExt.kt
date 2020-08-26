@@ -1,6 +1,5 @@
 package com.example.server.db.table
 
-import com.example.common.CreateNoteDto
 import com.example.common.Note
 
 import org.jetbrains.exposed.sql.ResultRow

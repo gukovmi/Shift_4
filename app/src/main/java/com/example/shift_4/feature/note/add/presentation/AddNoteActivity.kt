@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.common.CreateNoteDto
+import com.example.common.Note
 import com.example.shift_4.R
 import com.example.shift_4.feature.note.list.presentation.NotesListActivity
 import kotlinx.android.synthetic.main.activity_note_add.*
@@ -30,14 +31,13 @@ class AddNoteActivity : AppCompatActivity(), AddNoteView {
                 val noteTitle = newNoteTitle.text.toString()
                 val noteDescription = newNoteDescription.text.toString()
                 if (noteTitle != "" && noteDescription != "") {
-                    val newNote = CreateNoteDto(noteTitle, noteDescription)
+                    val newNote = Note(0, noteTitle, noteDescription)
                     presenter.addNote(newNote)
                     Toast.makeText(this@AddNoteActivity, "Note created", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@AddNoteActivity, NotesListActivity::class.java)
                     startActivity(intent)
                 }
             }
-
         }
     }
 

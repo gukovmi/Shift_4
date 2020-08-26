@@ -23,12 +23,12 @@ class NotesRepositoryImpl(
         networkNoteDataSource.getNote(noteId)
 
 
-    override suspend fun updateNote(noteId: Long, createNoteDto: CreateNoteDto) {
-        networkNoteDataSource.updateNote(noteId, createNoteDto)
+    override suspend fun updateNote(note: Note) {
+        networkNoteDataSource.updateNote(note)
     }
 
-    override suspend fun addNote(createNoteDto: CreateNoteDto) {
-        networkNoteDataSource.addNote(createNoteDto)
+    override suspend fun addNote(note: Note) {
+        networkNoteDataSource.addNote(note)
     }
 
 }

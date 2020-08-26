@@ -9,6 +9,6 @@ interface NoteDetailsView {
 
 interface NoteDetailsPresenter {
     suspend fun onViewAttached(noteId: Long)
-    suspend fun updateNote(noteId: Long, createNoteDto: CreateNoteDto)
+    suspend fun updateNote(note: Note)
     suspend fun getNote(noteId: Long): Note
 }

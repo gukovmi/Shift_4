@@ -22,48 +22,37 @@ class NotesRepository {
             else{
                 Notes.selectAll().orderBy(Notes.id to SortOrder.ASC).map { it.toNote() }.subList(start.toInt(), Notes.selectAll().count())
             }
-
-            //Notes.select { Notes.id.greater(start) }.limit(size).map{it.toNote()}
-
-
-            //Notes.fields.subList(start.toInt(), start.toInt()+size)
-
-
-            //Notes.selectAll().set.fields.subList(start.toInt(), start.toInt()+size)
-                    //.subList(start.toInt(), size)
-//            Notes.select { Notes.id.greater(start) }
-//                .limit(size).map{it.toNote()}
         }
 
-    suspend fun add(createNoteDto: CreateNoteDto) {
+    suspend fun add(note: Note) {
         dbQuery {
             Notes.insert{ insertStatement ->
-                insertStatement[title] = createNoteDto.title
-                insertStatement[description] = createNoteDto.description
+                insertStatement[title] = note.title
+                insertStatement[description] = note.description
             }
             Notes.selectAll().orderBy(Notes.id to SortOrder.ASC)
         }
     }
 
-    suspend fun delete(id: Long) {
+    suspend fun delete(noteId: Long) {
         dbQuery {
             Notes.deleteWhere {
-                Notes.id.eq(id)
+                Notes.id.eq(noteId)
             }
         }
     }
 
-    suspend fun getById(id: Long) =
+    suspend fun getById(noteId: Long) =
         dbQuery {
-            Notes.select(Notes.id eq id).map{it.toNote()}.first()
+            Notes.select(Notes.id eq noteId).map{it.toNote()}.first()
         }
 
-    suspend fun update(id: Long, createNoteDto: CreateNoteDto) {
+    suspend fun update(note: Note) {
         dbQuery {
-            Notes.update({ Notes.id eq id })
+            Notes.update({ Notes.id eq note.id })
             { updateStatement ->
-                updateStatement[title] = createNoteDto.title
-                updateStatement[description] = createNoteDto.description
+                updateStatement[title] = note.title
+                updateStatement[description] = note.description
             }
         }
     }

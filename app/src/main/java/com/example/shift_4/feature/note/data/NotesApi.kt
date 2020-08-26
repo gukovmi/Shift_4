@@ -26,13 +26,13 @@ interface NotesApi {
 
     @PATCH("/notes/details")
     suspend fun updateNote(
-        @Query("id") noteId: Long,
-        @Body createNoteDto: CreateNoteDto
+        //@Query("id") noteId: Long,
+        @Body note: Note
     )
 
     @POST("/notes")
     suspend fun addNote(
-        @Body createNoteDto: CreateNoteDto
+        @Body note: Note
     )
 
 }

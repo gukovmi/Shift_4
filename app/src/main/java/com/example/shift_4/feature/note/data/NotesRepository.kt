@@ -9,6 +9,6 @@ interface NotesRepository {
     suspend fun getPage(start: Long, size: Int): ArrayList<Note>
     suspend fun deleteNote(noteId: Long)
     suspend fun getNote(noteId: Long): Note
-    suspend fun updateNote(noteId: Long, createNoteDto: CreateNoteDto)
-    suspend fun addNote(createNoteDto: CreateNoteDto)
+    suspend fun updateNote(note: Note)
+    suspend fun addNote(note: Note)
 }

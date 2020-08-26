@@ -1,6 +1,7 @@
 package com.example.server
 
 import com.example.common.CreateNoteDto
+import com.example.common.Note
 import com.example.server.db.DatabaseFactory
 import com.example.server.repository.NotesRepository
 import io.ktor.application.Application
@@ -56,7 +57,7 @@ fun Application.module(testing: Boolean = false) {
                 }
             }
             post {
-                val note = call.receive<CreateNoteDto>()
+                val note = call.receive<Note>()
                 repository.add(note)
                 call.respond(HttpStatusCode.OK)
             }
@@ -82,11 +83,11 @@ fun Application.module(testing: Boolean = false) {
             }
             patch {
                 val id = call.request.queryParameters["id"]?.toLong()
-                val note = call.receive<CreateNoteDto>()
+                val note = call.receive<Note>()
                 if (id == null) {
                     call.respond(HttpStatusCode.BadRequest)
                 } else {
-                    repository.update(id, note)
+                    repository.update(note)
                     call.respond(HttpStatusCode.OK)
                 }
             }

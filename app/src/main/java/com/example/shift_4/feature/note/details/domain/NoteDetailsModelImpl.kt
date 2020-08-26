@@ -12,8 +12,8 @@ class NoteDetailsModelImpl (
         getNoteUseCase(noteId)
 
 
-    override suspend fun updateNote(noteId: Long, createNoteDto: CreateNoteDto) {
-        updateNoteUseCase(noteId, createNoteDto)
+    override suspend fun updateNote(note: Note) {
+        updateNoteUseCase(note)
     }
 
 }

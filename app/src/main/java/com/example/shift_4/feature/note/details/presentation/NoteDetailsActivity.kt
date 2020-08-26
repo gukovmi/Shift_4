@@ -37,8 +37,8 @@ class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
                 val noteTitle = noteDetailsTitle.text.toString()
                 val noteDescription = noteDetailsDescription.text.toString()
                 if (noteTitle != note.title || noteDescription != note.description) {
-                    val noteDto = CreateNoteDto(noteTitle, noteDescription)
-                    presenter.updateNote(note.id, noteDto)
+                    val updatedNote = Note(note.id, noteTitle, noteDescription)
+                    presenter.updateNote(updatedNote)
                     Toast.makeText(this@NoteDetailsActivity, "Changes applied", Toast.LENGTH_LONG).show()
                     val intent = Intent(this@NoteDetailsActivity, NotesListActivity::class.java)
                     startActivity(intent)

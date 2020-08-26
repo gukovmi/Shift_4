@@ -14,8 +14,8 @@ class NoteDetailsPresenterImpl(private var view: NoteDetailsView
         view.initView(getNote(noteId))
     }
 
-    override suspend fun updateNote(noteId: Long, createNoteDto: CreateNoteDto) {
-        model.updateNote(noteId, createNoteDto)
+    override suspend fun updateNote(note: Note) {
+        model.updateNote(note)
     }
 
     override suspend fun getNote(noteId: Long): Note =
