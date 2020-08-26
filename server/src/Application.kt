@@ -82,14 +82,9 @@ fun Application.module(testing: Boolean = false) {
                 }
             }
             patch {
-                val id = call.request.queryParameters["id"]?.toLong()
                 val note = call.receive<Note>()
-                if (id == null) {
-                    call.respond(HttpStatusCode.BadRequest)
-                } else {
-                    repository.update(note)
-                    call.respond(HttpStatusCode.OK)
-                }
+                repository.update(note)
+                call.respond(HttpStatusCode.OK)
             }
         }
     }
