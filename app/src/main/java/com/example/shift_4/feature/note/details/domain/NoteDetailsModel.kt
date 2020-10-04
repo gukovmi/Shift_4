@@ -1,9 +1,10 @@
 package com.example.shift_4.feature.note.details.domain
 
-import com.example.common.CreateNoteDto
 import com.example.common.Note
+import io.reactivex.Completable
+import io.reactivex.Single
 
 interface NoteDetailsModel {
-    suspend fun getNote(noteId: Long): Note
-    suspend fun updateNote(note: Note)
+    fun getNote(noteId: Long): Single<Note>
+    fun updateNote(note: Note): Completable
 }

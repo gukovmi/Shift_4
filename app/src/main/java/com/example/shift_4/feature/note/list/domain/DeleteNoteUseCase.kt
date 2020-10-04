@@ -1,9 +1,10 @@
 package com.example.shift_4.feature.note.list.domain
 
 import com.example.shift_4.feature.note.data.NotesRepository
+import io.reactivex.Completable
 
 
-class DeleteNoteUseCase (private val notesRepository: NotesRepository) {
+class DeleteNoteUseCase(private val notesRepository: NotesRepository) {
 
-    suspend operator fun invoke(noteId: Long) = notesRepository.deleteNote(noteId)
+    operator fun invoke(noteId: Long): Completable = notesRepository.deleteNote(noteId)
 }

@@ -8,6 +8,15 @@
         android:background="@color/colorBackground">
 
     <Button
+            android:id="@+id/updateNotesListButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:text="Update"
+            android:layout_gravity="center"/>
+
+    <Button
             android:id="@+id/addNoteButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,38 +1,39 @@
 package com.example.shift_4.feature.note.data
 
-import com.example.common.CreateNoteDto
 import com.example.common.Note
+import io.reactivex.Completable
+import io.reactivex.Single
 import retrofit2.http.*
 
 interface NotesApi {
     @GET("/notes")
-    suspend fun getAll(): ArrayList<Note>
+    fun getAll(): Single<List<Note>>
 
     @GET("/notes")
-    suspend fun getPage(
+    fun getPage(
         @Query("start") start: Long,
         @Query("size") size: Int
-    ): ArrayList<Note>
+    ): Single<List<Note>>
 
     @DELETE("/notes")
-    suspend fun deleteNote(
+    fun deleteNote(
         @Query("id") noteId: Long
-    )
+    ): Completable
 
     @GET("/notes/details")
-    suspend fun getNote(
+    fun getNote(
         @Query("id") noteId: Long
-    ): Note
+    ): Single<Note>
 
     @PATCH("/notes/details")
-    suspend fun updateNote(
+    fun updateNote(
         //@Query("id") noteId: Long,
         @Body note: Note
-    )
+    ): Completable
 
     @POST("/notes")
-    suspend fun addNote(
+    fun addNote(
         @Body note: Note
-    )
+    ): Completable
 
 }

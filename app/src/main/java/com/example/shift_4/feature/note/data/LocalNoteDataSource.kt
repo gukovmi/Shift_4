@@ -1,39 +1,46 @@
 package com.example.shift_4.feature.note.data
 
-import com.example.common.CreateNoteDto
 import com.example.common.Note
-import com.example.shift_4.feature.note.domain.entity.NoteDao
+import com.example.shift_4.feature.note.domain.entity.AppDatabase
+import io.reactivex.Completable
+import io.reactivex.Single
 
 interface LocalNoteDataSource {
-    suspend fun getNotes(): ArrayList<Note>
-//   suspend fun getPage(start: Long, size: Int): ArrayList<Note>
-    suspend fun deleteNote(noteId: Long)
-    suspend fun getNote(noteId: Long): Note
-    suspend fun updateNote(note: Note)
-    suspend fun addNote(note: Note)
+    fun getNotes(): Single<List<Note>>
+    fun getPage(start: Long, size: Int): Single<List<Note>>
+    fun deleteNote(noteId: Long): Completable
+    fun getNote(noteId: Long): Single<Note>
+    fun updateNote(note: Note): Completable
+    fun addNote(note: Note): Completable
+    fun saveNotesList(notesList: List<Note>): Completable
+    fun clearNotes(): Completable
 }
 
-class LocalNoteDataSourceImpl(private val db: NoteDao) : LocalNoteDataSource {
-    override suspend fun getNotes(): ArrayList<Note> =
-        db.getAll()
+class LocalNoteDataSourceImpl(private val db: AppDatabase) : LocalNoteDataSource {
+    override fun getNotes(): Single<List<Note>> =
+        db.noteDao().getAll()
 
-//    override suspend fun getPage(start: Long, size: Int): ArrayList<Note> =
-//        api.getPage(start, size)
+    override fun getPage(start: Long, size: Int): Single<List<Note>> =
+        db.noteDao().getPage()
 
-    override suspend fun deleteNote(noteId: Long) {
-        db.deleteNote(noteId)
-    }
+    override fun deleteNote(noteId: Long): Completable =
+        db.noteDao().deleteNote(noteId)
 
-    override suspend fun getNote(noteId: Long): Note =
-        db.getNote(noteId)
 
-    override suspend fun updateNote(note: Note) {
-        db.updateNote(note)
-    }
+    override fun getNote(noteId: Long): Single<Note> =
+        db.noteDao().getNote(noteId)
 
-    override suspend fun addNote(note: Note) {
-        db.addNote(note)
-    }
+    override fun updateNote(note: Note): Completable =
+        db.noteDao().updateNote(note)
+
+    override fun addNote(note: Note): Completable =
+        db.noteDao().addNote(note)
+
+    override fun saveNotesList(notesList: List<Note>): Completable =
+        db.noteDao().saveNotesList(notesList)
+
+    override fun clearNotes(): Completable =
+        db.noteDao().clearNotes()
 
 
 }

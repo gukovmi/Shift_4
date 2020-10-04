@@ -2,10 +2,9 @@ package com.example.shift_4.feature.note.list.presentation
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,62 +13,56 @@ import com.example.shift_4.R
 import com.example.shift_4.feature.note.add.presentation.AddNoteActivity
 import com.example.shift_4.feature.note.details.presentation.NoteDetailsActivity
 import kotlinx.android.synthetic.main.activity_notes_list.*
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 
 class NotesListActivity : AppCompatActivity(), NotesListView {
 
-    private lateinit var presenter: NotesListPresenter
+    private val presenter = NotesListPresenterImpl()
 
-    private var notesListAdapter: NotesListAdapter? = null
-
-    private val coroutineScope = MainScope()
+    private lateinit var notesListAdapter: NotesListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notes_list)
 
-        coroutineScope.launch {
-            presenter = NotesListPresenterImpl(this@NotesListActivity)
-            presenter.onViewAttached()
-        }
+        presenter.attachView(this)
 
-        addNoteButton.setOnClickListener {
-            val intent = Intent(this, AddNoteActivity::class.java)
-            startActivity(intent)
-        }
+        presenter.onViewAttached()
     }
 
     override fun onResume() {
-        coroutineScope.launch {
-            presenter = NotesListPresenterImpl(this@NotesListActivity)
-            presenter.onViewAttached()
-        }
+        presenter.initConfigure()
         super.onResume()
     }
 
-    override fun showNotes(notesList: ArrayList<Note>?) {
-        if (notesList.isNullOrEmpty()) {
-            Toast.makeText(this, "Notes list is empty!", Toast.LENGTH_LONG).show()
-        } else {
-            notesListAdapter = NotesListAdapter(
-                this,
-                notesList = notesList,
-                onNoteItemClick = { note ->
-                    presenter.onNoteItemClick(note)
-                })
+    override fun navigateToNoteDetails(note: Note) {
+        val intent = Intent(this, NoteDetailsActivity::class.java)
+        intent.putExtra("note", note)
+        startActivity(intent)
+    }
 
-            val mLayoutManager = LinearLayoutManager(this)
-            notesListRecyclerView.layoutManager = mLayoutManager
+    override fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
 
-            val divider = DividerItemDecoration(
-                notesListRecyclerView.context, mLayoutManager.orientation)
+    override fun addPageToAdapter(newPage: List<Note>) {
+        notesListAdapter.addData(newPage)
+        notesListAdapter.isLoading = false
+    }
 
-            ContextCompat.getDrawable(baseContext, R.drawable.divider_black)?.let { divider.setDrawable(it) }
-            notesListRecyclerView.addItemDecoration(divider)
+    override fun initConfigure(notesList: List<Note>) {
+        notesListAdapter = NotesListAdapter(
+            this,
+            notesList = notesList,
+            onNoteItemClick = { note ->
+                presenter.onNoteItemClick(note)
+            })
 
-            val simpleCallback: ItemTouchHelper.SimpleCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        notesListRecyclerView.layoutManager = LinearLayoutManager(this)
+        notesListRecyclerView.adapter = notesListAdapter
+
+
+        val simpleCallback: ItemTouchHelper.SimpleCallback =
+            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
                 override fun onMove(
                     recyclerView: RecyclerView,
                     viewHolder: RecyclerView.ViewHolder,
@@ -86,49 +79,47 @@ class NotesListActivity : AppCompatActivity(), NotesListView {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, i: Int) {
                     Toast.makeText(this@NotesListActivity, "Note has been deleted", Toast.LENGTH_SHORT).show()
                     val position = viewHolder.adapterPosition
-                    coroutineScope.launch {
-                        val currentNotesList = notesListAdapter!!.getNotesList()
-                        presenter.deleteNote(currentNotesList[position].id)
-                    }
+                    val currentNotesList = notesListAdapter.getNotesList()
+                    Log.e("Position", position.toString())
+                    presenter.deleteNote(currentNotesList[position].id)
+
                 }
             }
 
-            val itemTouchHelper = ItemTouchHelper(simpleCallback)
-            itemTouchHelper.attachToRecyclerView(notesListRecyclerView)
+        val itemTouchHelper = ItemTouchHelper(simpleCallback)
+        itemTouchHelper.attachToRecyclerView(notesListRecyclerView)
 
-            notesListRecyclerView.adapter = notesListAdapter
-            notesListRecyclerView?.addOnScrollListener(object : PaginationScrollListener(mLayoutManager) {
+        notesListRecyclerView?.addOnScrollListener(object :
+            PaginationScrollListener(notesListRecyclerView.layoutManager as LinearLayoutManager) {
 
-                override fun isLastPage(): Boolean {
-                    return notesListAdapter!!.isLastPage
-                }
+            override fun isLastPage(): Boolean {
+                return notesListAdapter.isLastPage
+            }
 
-                override fun isLoading(): Boolean {
-                    return notesListAdapter!!.isLoading
-                }
+            override fun isLoading(): Boolean {
+                return notesListAdapter.isLoading
+            }
 
-                override fun loadMoreItems(totalItemCount: Int) {
-                    notesListAdapter!!.isLoading = true
+            override fun loadMoreItems(totalItemCount: Int) {
+                notesListAdapter.isLoading = true
+                val lastElIndex = notesListAdapter.getNotesList().lastIndex
+                Log.e("lastElIndex", lastElIndex.toString())
+                presenter.getPage((lastElIndex + 1).toLong(), 10)
+            }
+        })
 
-                    coroutineScope.launch {
-                        val lastElIndex=notesListAdapter!!.getNotesList().lastIndex
-                        val newPage = presenter.getPage((lastElIndex+1).toLong(), 10)
-                        notesListAdapter!!.addData(newPage)
-                        notesListAdapter!!.isLoading = false
-                    }
-                }
-            })
+        addNoteButton.setOnClickListener {
+            val intent = Intent(this, AddNoteActivity::class.java)
+            startActivity(intent)
+        }
+
+        updateNotesListButton.setOnClickListener {
+            presenter.initConfigure()
         }
     }
 
-    override fun navigateToNoteDetails(note: Note) {
-        val intent = Intent(this, NoteDetailsActivity::class.java)
-        intent.putExtra("note", note)
-        startActivity(intent)
-    }
-
     override fun onDestroy() {
-        coroutineScope.cancel()
+        presenter.onDestroy()
         super.onDestroy()
     }
 }

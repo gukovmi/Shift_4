@@ -11,12 +11,11 @@ import kotlinx.android.synthetic.main.item_note.view.*
 
 typealias OnNoteItemClick = (Note) -> Unit
 
-class NotesListAdapter (
+class NotesListAdapter(
     private val context: Context,
-    private val notesList: ArrayList<Note>,
+    private var notesList: List<Note>,
     private val onNoteItemClick: OnNoteItemClick
-) : RecyclerView.Adapter<NotesListAdapter.ViewHolder>()
-{
+) : RecyclerView.Adapter<NotesListAdapter.ViewHolder>() {
 
     var isLastPage: Boolean = false
     var isLoading: Boolean = false
@@ -24,8 +23,8 @@ class NotesListAdapter (
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindNote(note: Note, onNoteItemClick: OnNoteItemClick) {
             itemView.apply {
-                itemNoteTitle.text=note.title
-                itemNoteDescription.text=note.description
+                itemNoteTitle.text = note.title
+                itemNoteDescription.text = note.description
 
                 setOnClickListener { onNoteItemClick(note) }
             }
@@ -37,7 +36,7 @@ class NotesListAdapter (
         return ViewHolder(view)
     }
 
-    fun getNotesList(): ArrayList<Note> {
+    fun getNotesList(): List<Note> {
         return notesList
     }
 
@@ -49,10 +48,10 @@ class NotesListAdapter (
         holder.bindNote(notesList[position], onNoteItemClick)
     }
 
-    fun addData(notesList1: ArrayList<Note>?) {
-        if(notesList1!=null) {
+    fun addData(notesList1: List<Note>?) {
+        if (notesList1 != null) {
             val size = notesList.size
-            notesList.addAll(notesList1)
+            notesList = listOf(notesList, notesList1).flatMap { it }
             val sizeNew = notesList.size
             notifyItemRangeChanged(size, sizeNew)
         }
